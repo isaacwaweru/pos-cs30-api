@@ -1,0 +1,46 @@
+/* ---------------------------------------------------------------
+         THERMAL RECEIPT STYLING (hidden on screen, active on print)
+         — design intentionally unchanged —
+      ---------------------------------------------------------------- */
+.receipt-print-area {
+  display: none;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .receipt-print-area,
+  .receipt-print-area * {
+    visibility: visible;
+  }
+  .receipt-print-area {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 58mm; /* Standard CS30 thermal printer width */
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    color: #000;
+    padding: 2mm;
+    background: #fff;
+  }
+  .pos-layout {
+    display: none !important;
+  }
+  .r-center {
+    text-align: center;
+  }
+  .r-bold {
+    font-weight: bold;
+  }
+  .r-line {
+    border-top: 1px dashed #000;
+    margin: 6px 0;
+  }
+  .r-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+}
