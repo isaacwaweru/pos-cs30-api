@@ -1,5 +1,8 @@
 {
   "appId": "com.safiwash.app",
   "appName": "SafiWash",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  }
 }

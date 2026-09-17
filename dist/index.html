@@ -8,7 +8,7 @@
     />
     <title>CS30 POS - New Job Carwash</title>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CDN (dev only — replace with a built stylesheet for offline POS use) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -27,7 +27,9 @@
       };
     </script>
 
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <!-- Relative path: works in Vite dev AND in the Capacitor WebView -->
+    <script type="module" crossorigin src="./assets/main-BbuUJxjS.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-ZgQmIFqT.css">
   </head>
 
   <body
@@ -327,7 +329,6 @@
           type="button"
           class="mt-1 w-full rounded-xl bg-brand px-4 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-hover active:translate-y-px"
           id="createJobBtn"
-          onclick="printReceipt()"
         >
           Create Job — KSh 0
         </button>
@@ -377,7 +378,13 @@
       </aside>
     </div>
 
-    <!-- ============ Thermal Printer Output (unchanged) ============ -->
+    <!-- ============ Toast Container (ADDED — was missing) ============ -->
+    <div
+      id="toastContainer"
+      class="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex flex-col items-center gap-2 px-4"
+    ></div>
+
+    <!-- ============ Thermal Printer Output ============ -->
     <div id="receipt" class="receipt-print-area">
       <div class="r-center r-bold" style="font-size: 14px">
         SPARKLE EXPRESS CARWASH
@@ -414,6 +421,6 @@
       </div>
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <!-- Relative path so it resolves inside the Capacitor WebView too -->
   </body>
 </html>

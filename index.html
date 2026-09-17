@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>CS30 POS - New Job Carwash</title>
+
+    <!-- Tailwind CDN (dev only — replace with a built stylesheet for offline POS use) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                DEFAULT: "#1677FF",
+                hover: "#0F62D6",
+                soft: "#E8F1FF",
+              },
+              ink: "#0B1F3A",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Relative path: works in Vite dev AND in the Capacitor WebView -->
+    <link rel="stylesheet" href="./src/css/styles.css" />
+  </head>
+
+  <body
+    class="min-h-screen bg-gradient-to-br from-[#eef4fd] via-[#f7fafd] to-[#e6effa] p-4 text-ink antialiased"
+  >
+    <div
+      class="pos-layout mx-auto grid max-w-[1100px] grid-cols-1 gap-5 lg:grid-cols-[1fr_320px]"
+    >
+      <!-- ============ LEFT: Interactive Workflow ============ -->
+      <div class="flex flex-col gap-4">
+        <h1
+          class="relative pl-3 text-xl font-bold tracking-tight text-ink before:absolute before:bottom-0.5 before:left-0 before:top-0.5 before:w-1 before:rounded-full before:bg-brand"
+        >
+          New Job
+        </h1>
+
+        <!-- 1. Vehicle Type -->
+        <section
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        >
+          <h2 class="mb-3 flex items-center gap-1.5 text-sm font-semibold">
+            🚗 1. Vehicle Type
+          </h2>
+          <div
+            class="grid grid-cols-3 gap-2 sm:grid-cols-5"
+            id="vehicleTypesGroup"
+          >
+            <button
+              type="button"
+              class="v-btn rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-2.5 text-center text-[13px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+              data-type="Saloon"
+            >
+              Saloon
+            </button>
+            <button
+              type="button"
+              class="v-btn rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-2.5 text-center text-[13px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+              data-type="SUV"
+            >
+              SUV
+            </button>
+            <button
+              type="button"
+              class="v-btn rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-2.5 text-center text-[13px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+              data-type="Van"
+            >
+              Van
+            </button>
+            <button
+              type="button"
+              class="v-btn rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-2.5 text-center text-[13px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+              data-type="Motorbike"
+            >
+              Motorbike
+            </button>
+            <button
+              type="button"
+              class="v-btn rounded-lg border border-slate-200 bg-slate-50 px-1.5 py-2.5 text-center text-[13px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+              data-type="Truck"
+            >
+              Truck
+            </button>
+          </div>
+        </section>
+
+        <!-- 2. Services -->
+        <section
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        >
+          <h2 class="mb-3 flex items-center gap-1.5 text-sm font-semibold">
+            ✨ 2. Services
+          </h2>
+          <div class="flex flex-col gap-2" id="servicesList">
+            <button
+              type="button"
+              class="service-item group flex w-full items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-left transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-name="Exterior Wash"
+              data-price="300"
+            >
+              <span class="flex items-center gap-2.5">
+                <span
+                  class="custom-checkbox flex h-[18px] w-[18px] flex-none items-center justify-center rounded border-2 border-slate-300 text-[11px] font-bold text-white transition group-[.active]:border-brand group-[.active]:bg-brand"
+                >
+                  <span class="opacity-0 group-[.active]:opacity-100">✓</span>
+                </span>
+                <span
+                  class="font-medium text-slate-600 group-[.active]:text-ink"
+                  >Exterior Wash</span
+                >
+              </span>
+              <span
+                class="font-semibold text-slate-600 group-[.active]:text-ink"
+                >KSh 300</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="service-item group flex w-full items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-left transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-name="Interior Cleaning"
+              data-price="200"
+            >
+              <span class="flex items-center gap-2.5">
+                <span
+                  class="custom-checkbox flex h-[18px] w-[18px] flex-none items-center justify-center rounded border-2 border-slate-300 text-[11px] font-bold text-white transition group-[.active]:border-brand group-[.active]:bg-brand"
+                >
+                  <span class="opacity-0 group-[.active]:opacity-100">✓</span>
+                </span>
+                <span
+                  class="font-medium text-slate-600 group-[.active]:text-ink"
+                  >Interior Cleaning</span
+                >
+              </span>
+              <span
+                class="font-semibold text-slate-600 group-[.active]:text-ink"
+                >KSh 200</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="service-item group flex w-full items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-left transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-name="Waxing"
+              data-price="600"
+            >
+              <span class="flex items-center gap-2.5">
+                <span
+                  class="custom-checkbox flex h-[18px] w-[18px] flex-none items-center justify-center rounded border-2 border-slate-300 text-[11px] font-bold text-white transition group-[.active]:border-brand group-[.active]:bg-brand"
+                >
+                  <span class="opacity-0 group-[.active]:opacity-100">✓</span>
+                </span>
+                <span
+                  class="font-medium text-slate-600 group-[.active]:text-ink"
+                  >Waxing</span
+                >
+              </span>
+              <span
+                class="font-semibold text-slate-600 group-[.active]:text-ink"
+                >KSh 600</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="service-item group flex w-full items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-left transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-name="Tire Shine"
+              data-price="100"
+            >
+              <span class="flex items-center gap-2.5">
+                <span
+                  class="custom-checkbox flex h-[18px] w-[18px] flex-none items-center justify-center rounded border-2 border-slate-300 text-[11px] font-bold text-white transition group-[.active]:border-brand group-[.active]:bg-brand"
+                >
+                  <span class="opacity-0 group-[.active]:opacity-100">✓</span>
+                </span>
+                <span
+                  class="font-medium text-slate-600 group-[.active]:text-ink"
+                  >Tire Shine</span
+                >
+              </span>
+              <span
+                class="font-semibold text-slate-600 group-[.active]:text-ink"
+                >KSh 100</span
+              >
+            </button>
+          </div>
+        </section>
+
+        <!-- 3. Assign Washers -->
+        <section
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        >
+          <h2 class="mb-3 flex items-center gap-1.5 text-sm font-semibold">
+            👥 3. Assign Washers
+          </h2>
+          <div
+            class="grid grid-cols-2 gap-2.5 sm:grid-cols-4"
+            id="washersGroup"
+          >
+            <button
+              type="button"
+              class="washer-card group rounded-xl border border-slate-200 bg-slate-50 px-2 py-3 text-center transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-washer="Dennis M."
+            >
+              <span
+                class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-[11px] font-semibold text-slate-600 transition group-[.active]:bg-brand group-[.active]:text-white"
+                >D</span
+              >
+              <span
+                class="block text-xs text-slate-500 group-[.active]:text-brand group-[.active]:font-medium"
+                >Dennis M.</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="washer-card group rounded-xl border border-slate-200 bg-slate-50 px-2 py-3 text-center transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-washer="Mary W."
+            >
+              <span
+                class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-[11px] font-semibold text-slate-600 transition group-[.active]:bg-brand group-[.active]:text-white"
+                >M</span
+              >
+              <span
+                class="block text-xs text-slate-500 group-[.active]:text-brand group-[.active]:font-medium"
+                >Mary W.</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="washer-card group rounded-xl border border-slate-200 bg-slate-50 px-2 py-3 text-center transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-washer="Ivy K."
+            >
+              <span
+                class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-[11px] font-semibold text-slate-600 transition group-[.active]:bg-brand group-[.active]:text-white"
+                >I</span
+              >
+              <span
+                class="block text-xs text-slate-500 group-[.active]:text-brand group-[.active]:font-medium"
+                >Ivy K.</span
+              >
+            </button>
+
+            <button
+              type="button"
+              class="washer-card group rounded-xl border border-slate-200 bg-slate-50 px-2 py-3 text-center transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/5"
+              data-washer="Brian O."
+            >
+              <span
+                class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-[11px] font-semibold text-slate-600 transition group-[.active]:bg-brand group-[.active]:text-white"
+                >B</span
+              >
+              <span
+                class="block text-xs text-slate-500 group-[.active]:text-brand group-[.active]:font-medium"
+                >Brian O.</span
+              >
+            </button>
+          </div>
+        </section>
+
+        <!-- 4. Payment & Plate -->
+        <section
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+        >
+          <h2 class="mb-3 flex items-center gap-1.5 text-sm font-semibold">
+            💳 4. Payment & Plate
+          </h2>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label
+                for="plateNumberInput"
+                class="mb-1.5 block text-[11px] font-medium text-slate-500"
+                >Plate Number</label
+              >
+              <input
+                type="text"
+                id="plateNumberInput"
+                value=""
+                placeholder="KCA 123A"
+                class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold tracking-wide text-ink placeholder:font-medium placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+              />
+            </div>
+
+            <div>
+              <span class="mb-1.5 block text-[11px] font-medium text-slate-500"
+                >Payment Method</span
+              >
+              <div class="grid grid-cols-3 gap-1.5" id="paymentMethodsGroup">
+                <button
+                  type="button"
+                  class="pay-btn rounded-lg border border-slate-200 bg-slate-50 px-1 py-2.5 text-center text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+                  data-pay="M-PESA"
+                >
+                  M-PESA
+                </button>
+                <button
+                  type="button"
+                  class="pay-btn rounded-lg border border-slate-200 bg-slate-50 px-1 py-2.5 text-center text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+                  data-pay="Cash"
+                >
+                  Cash
+                </button>
+                <button
+                  type="button"
+                  class="pay-btn rounded-lg border border-slate-200 bg-slate-50 px-1 py-2.5 text-center text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 [&.active]:border-brand [&.active]:bg-brand/10 [&.active]:text-brand"
+                  data-pay="Card"
+                >
+                  Card
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Action Button -->
+        <button
+          type="button"
+          class="mt-1 w-full rounded-xl bg-brand px-4 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-hover active:translate-y-px"
+          id="createJobBtn"
+        >
+          Create Job — KSh 0
+        </button>
+      </div>
+
+      <!-- ============ RIGHT: Live Summary ============ -->
+      <aside
+        class="h-fit rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-4"
+      >
+        <h2
+          class="mb-4 border-b-2 border-brand pb-2.5 text-[15px] font-bold text-ink"
+        >
+          Summary
+        </h2>
+
+        <div class="mb-3 flex justify-between gap-3 text-[13px]">
+          <span class="text-slate-500">Ticket</span>
+          <span id="sumTicket" class="font-medium text-ink">SW-0023</span>
+        </div>
+        <div class="mb-3 flex justify-between gap-3 text-[13px]">
+          <span class="text-slate-500">Vehicle</span>
+          <span id="sumVehicle" class="font-medium text-ink">—</span>
+        </div>
+        <div class="mb-3 flex justify-between gap-3 text-[13px]">
+          <span class="text-slate-500">Services</span>
+          <span id="sumServicesCount" class="font-medium text-ink">0</span>
+        </div>
+        <div class="mb-3 flex justify-between gap-3 text-[13px]">
+          <span class="text-slate-500">Washers</span>
+          <span id="sumWashersCount" class="font-medium text-ink">0</span>
+        </div>
+        <div class="mb-3 flex justify-between gap-3 text-[13px]">
+          <span class="text-slate-500">Payment</span>
+          <span id="sumPayment" class="font-medium text-ink">—</span>
+        </div>
+
+        <div class="my-4 border-t border-dashed border-slate-300"></div>
+
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-[15px] font-bold text-ink">Total</span>
+          <span id="sumTotal" class="text-lg font-bold text-brand">KSh 0</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-slate-500">Commission/washer</span>
+          <span id="sumCommission" class="font-medium text-ink">KSh 0</span>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ============ Toast Container (ADDED — was missing) ============ -->
+    <div
+      id="toastContainer"
+      class="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex flex-col items-center gap-2 px-4"
+    ></div>
+
+    <!-- ============ Thermal Printer Output ============ -->
+    <div id="receipt" class="receipt-print-area">
+      <div class="r-center r-bold" style="font-size: 14px">
+        SPARKLE EXPRESS CARWASH
+      </div>
+      <div class="r-center" style="font-size: 10px">Mobile Smart POS Unit</div>
+      <div class="r-line"></div>
+      <div class="r-flex"><span>Date:</span> <span id="p-date"></span></div>
+      <div class="r-flex">
+        <span>Receipt #:</span> <span id="p-receiptno"></span>
+      </div>
+      <div class="r-line"></div>
+      <div class="r-flex r-bold">
+        <span>Vehicle:</span> <span id="p-plate"></span>
+      </div>
+      <div class="r-flex"><span>Type:</span> <span id="p-size"></span></div>
+      <div class="r-flex">
+        <span>Washer(s):</span> <span id="p-washers"></span>
+      </div>
+      <div class="r-line"></div>
+      <div id="p-services-list"></div>
+      <div class="r-line"></div>
+      <div class="r-flex r-bold" style="margin-top: 4px">
+        <span>TOTAL:</span>
+        <span>KES <span id="p-amount">300</span></span>
+      </div>
+      <div class="r-flex">
+        <span>Paid via:</span> <span id="p-payment">M-PESA</span>
+      </div>
+      <div class="r-line"></div>
+      <div class="r-center" style="font-size: 10px">CS30 Handheld Terminal</div>
+      <div class="r-center r-bold" style="margin-top: 8px">THANK YOU!</div>
+      <div class="r-center" style="font-size: 9px; margin-top: 4px">
+        Welcome Again
+      </div>
+    </div>
+
+    <!-- Relative path so it resolves inside the Capacitor WebView too -->
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

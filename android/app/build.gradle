@@ -3,6 +3,18 @@ apply plugin: 'com.android.application'
 android {
     namespace = "com.safiwash.app"
     compileSdk = rootProject.ext.compileSdkVersion
+
+    // Add this sourceSets block:
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/aidl']
+        }
+    }
+
+     buildFeatures {
+        aidl true
+    }
+
     defaultConfig {
         applicationId "com.safiwash.app"
         minSdkVersion rootProject.ext.minSdkVersion
