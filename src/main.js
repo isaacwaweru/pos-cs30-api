@@ -247,8 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalSum = state.services.reduce((acc, curr) => acc + curr.price, 0);
 
     const receiptData = {
-      station: "SPARKLE EXPRESS CARWASH",
-      unit: "Mobile Smart POS Unit",
+      station: "SAFI WASH",
+      unit: "Unit 1",
       date: dateStr,
       ticket: state.ticket,
       plate: state.plate,
